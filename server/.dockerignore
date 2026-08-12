@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+.env
+.env.*
+!.env.example
+uploads/hr-documents/*
+!uploads/hr-documents/.gitkeep
+*.log
+.git
+.vscode

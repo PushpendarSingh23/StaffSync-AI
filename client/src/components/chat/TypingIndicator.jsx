@@ -1,0 +1,17 @@
+/**
+ * Animated three-dot typing indicator shown while waiting for the AI response.
+ */
+const TypingIndicator = () => (
+  <div className="flex justify-start">
+    <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-600 text-xs font-bold text-white">
+      AI
+    </div>
+    <div className="flex items-center gap-1 rounded-2xl rounded-tl-sm border border-gray-200 bg-white px-4 py-3 shadow-sm">
+      <span className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:0ms]" />
+      <span className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:150ms]" />
+      <span className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:300ms]" />
+    </div>
+  </div>
+);
+
+export default TypingIndicator;

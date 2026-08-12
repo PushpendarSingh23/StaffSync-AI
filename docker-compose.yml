@@ -1,0 +1,62 @@
+# Local dev stack: Express server + MongoDB.
+#
+# NOTE on RAG/vector search: the chat pipeline uses MongoDB Atlas'
+# `$vectorSearch` aggregation stage, which is NOT available on a self-hosted
+# `mongo` container. Everything else (auth, employees, document CRUD,
+# uploads) works fine against this local instance. To exercise the RAG
+# chat endpoints end-to-end, point DATABASE_URL at an Atlas cluster instead
+# (see server/.env.example) and skip the `mongo` service below.
+#
+# NOTE on OCR: the `server` image (built from server/Dockerfile) already
+# has Python + Tesseract baked in for the scanned-PDF OCR fallback — no
+# separate service needed. Rebuild the image after changing
+# server/scripts/ocr/requirements.txt.
+#
+# Usage:
+#   docker compose up --build
+#   docker compose up --build server   # server only, e.g. against Atlas
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: ems-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: ems-server
+    restart: unless-stopped
+    # Dev override: install devDependencies (nodemon) into the container's
+    # own node_modules volume, then hot-reload against the mounted source.
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./server/.env
+    environment:
+      # Overrides .env so the container talks to the `mongo` service by name
+      # instead of localhost. Remove this line to use Atlas from .env as-is.
+      DATABASE_URL: mongodb://mongo:27017
+      NODE_ENV: development
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+      - server-uploads:/app/uploads/hr-documents
+
+volumes:
+  mongo-data:
+  server-uploads:

@@ -1,0 +1,45 @@
+{
+  "//": "Copy this file to eval-set.json in the same folder and fill it in with real questions against your own uploaded HR documents. Each item's expectedDocument should match a Document.title exactly (case-insensitive) that a correct retrieval should surface in its top-k results.",
+  "cases": [
+    {
+      "question": "How many paid sick days am I entitled to per year?",
+      "expectedDocument": "Leave Policy",
+      "category": "Leave Policy"
+    },
+    {
+      "question": "Can I work from home full-time or only a few days a week?",
+      "expectedDocument": "Work From Home Policy",
+      "category": "Work From Home"
+    },
+    {
+      "question": "What health insurance plans does the company offer?",
+      "expectedDocument": "Insurance Policy",
+      "category": "Insurance"
+    },
+    {
+      "question": "What happens if I violate the code of conduct?",
+      "expectedDocument": "Code of Conduct",
+      "category": "Code of Conduct"
+    },
+    {
+      "question": "How often are performance appraisals conducted?",
+      "expectedDocument": "Appraisal Policy",
+      "category": "Appraisal"
+    },
+    {
+      "question": "What is the reimbursement limit for business travel?",
+      "expectedDocument": "Travel Policy",
+      "category": "Travel Policy"
+    },
+    {
+      "question": "When is payroll processed each month?",
+      "expectedDocument": "Payroll Policy",
+      "category": "Payroll"
+    },
+    {
+      "question": "What are the rules around using personal devices for work?",
+      "expectedDocument": "IT Security Policy",
+      "category": "IT Security"
+    }
+  ]
+}

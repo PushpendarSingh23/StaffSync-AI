@@ -1,0 +1,4 @@
+/node_modules
+.env
+# Keep the directory tracked but ignore uploaded files
+uploads/hr-documents/*.pdf

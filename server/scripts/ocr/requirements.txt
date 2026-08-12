@@ -1,0 +1,18 @@
+# Deps for ocr_pdf.py — used ONLY for the scanned-PDF OCR fallback.
+# Installed system-wide in the Docker image (see server/Dockerfile) so
+# `python3 ocr_pdf.py <file>` works out of the box in the container.
+#
+# For local (non-Docker) dev, install into a venv instead:
+#   python3 -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+#
+# Also requires the Tesseract OCR engine itself (a system binary, not a
+# pip package) — see README.md in this folder.
+#
+# PyMuPDF>=1.24.3 is required on Alpine/musl (x86_64) — earlier versions
+# don't ship a musllinux wheel and fail to build from source. (Alpine on
+# arm64 has no musllinux wheel at all yet; build the image for
+# linux/amd64 there, e.g. `docker build --platform linux/amd64 .`)
+PyMuPDF>=1.24.3,<2
+pytesseract>=0.3,<1
+Pillow>=10,<12
